@@ -1,2 +1,0 @@
-127.0.0.1 - - [09/Jul/2015:16:44:20 +0800] "GET /rimp/index.do HTTP/1.1" 404 934 http-bio-80-exec-1 219
-127.0.0.1 - - [09/Jul/2015:16:59:10 +0800] "GET /platform/index.do HTTP/1.1" 404 934 http-bio-80-exec-4 10

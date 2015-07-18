@@ -10,13 +10,11 @@
 	http://www.springframework.org/schema/aop
     http://www.springframework.org/schema/aop/spring-aop.xsd"
 	default-lazy-init="true">
-	<tx:annotation-driven/>
-	<!-- 使用annotation 自动注册bean, 只注册service层 -->
+	<tx:annotation-driven />
 	<context:component-scan base-package="cn.hoyoung" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
 
-	<!-- 数据源配置文件加载 -->
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
