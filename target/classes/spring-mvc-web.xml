@@ -14,10 +14,10 @@
     http://www.springframework.org/schema/aop 
 	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 	<mvc:annotation-driven/>
-	<context:component-scan base-package="cn.hoyoung"
+	<context:component-scan base-package="net.hoyoung"
 		use-default-filters="false">
 		<context:include-filter type="regex"
-			expression="cn.hoyoung.web.ctrl.*" />
+			expression="net.hoyoung.web.ctrl.*" />
 	</context:component-scan>
     <!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
         <property name="prefix" value="/WEB-INF/view/"/>  

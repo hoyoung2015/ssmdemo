@@ -11,7 +11,7 @@
     http://www.springframework.org/schema/aop/spring-aop.xsd"
 	default-lazy-init="true">
 	<tx:annotation-driven />
-	<context:component-scan base-package="cn.hoyoung" use-default-filters="false">
+	<context:component-scan base-package="net.hoyoung" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
 
