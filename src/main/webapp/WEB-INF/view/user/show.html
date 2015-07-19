@@ -5,9 +5,11 @@
 <title>Insert title here</title>
 </head>
 <body>
+Users:
 <#list users as user>  
 username : ${user.name}<br/>  
 password : ${user.age}  <br/>  
 </#list> 
-</body>
+<h1>标签</h1>
+<#if boss.name == "boss">boss</#if>
 </html>
