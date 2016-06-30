@@ -1,11 +1,9 @@
-package net.hoyoung.web.ctrl;
+package net.hoyoung.user.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import net.hoyoung.entity.User;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -13,10 +11,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import net.hoyoung.user.vo.User;
 @Controller
 @RequestMapping("/user")
-public class UserCtrl {
-	private Logger log = Logger.getLogger(UserCtrl.class);
+public class UserController {
+	private Logger log = Logger.getLogger(UserController.class);
 	@RequestMapping("/")
 	public String index(){
 		log.warn("fsdffffff------------------------------");

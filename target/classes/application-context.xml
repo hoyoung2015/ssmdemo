@@ -11,15 +11,79 @@
     http://www.springframework.org/schema/aop/spring-aop.xsd"
 	default-lazy-init="true">
 	<tx:annotation-driven />
-	<context:component-scan base-package="net.hoyoung" use-default-filters="false">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+	<context:component-scan base-package="net.hoyoung"
+		use-default-filters="false">
+		<!-- 自动扫描组件，这里要把controler下面的 controller去除，他们是在spring-servlet.xml中配置的，如果不去除会影响事务管理的 -->
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
 
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath:jdbc.properties</value>
 			</list>
 		</property>
 	</bean>
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass">
+			<value>${jdbc.driverClassName}</value>
+		</property>
+		<property name="maxPoolSize">
+			<value>${jdbc.maxPoolSize}</value>
+		</property>
+		<property name="minPoolSize">
+			<value>${jdbc.minPoolSize}</value>
+		</property>
+		<property name="idleConnectionTestPeriod">
+			<value>${jdbc.idleConnectionTestPeriod}</value>
+		</property>
+		<property name="maxIdleTime">
+			<value>${jdbc.maxIdleTime}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="user">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+	</bean>
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage" value="net.hoyoung.user.dao" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath*:net/hoyoung/user/dao/*Mapper.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 如果有多个映射包，可以用分号或者逗号分隔 -->
+		<property name="basePackage" value="net.hoyoung.user.dao" />
+		<!-- 没有必要去指定SqlSessionFactory ,MapperScannerConfigurer将会创建MapperFactoryBean并自动装配 -->
+	</bean>
+
+	<!-- transaction manager, use DataSourceTransactionManager -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="load*" read-only="true" />
+			<tx:method name="*" rollback-for="CustomException" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- spring declarative transaction management -->
+	<aop:config>
+		<aop:pointcut id="fooServiceMethods"
+			expression="execution(* net.hoyoung.*.service.impl.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="fooServiceMethods" />
+	</aop:config>
+	
 </beans>
