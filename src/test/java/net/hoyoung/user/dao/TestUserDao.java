@@ -17,8 +17,7 @@ public class TestUserDao extends Setup {
 	@Test
 	public void testAdd() {
 		User user = new User();
-		user.setAge(12);
-		user.setName("hoyoung");
+		user.setUsername("hoyoung");
 		userDao.insert(user);
 	}
 }
