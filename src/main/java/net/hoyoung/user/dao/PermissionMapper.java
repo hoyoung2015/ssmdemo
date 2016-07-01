@@ -1,5 +1,7 @@
 package net.hoyoung.user.dao;
 
+import java.util.List;
+
 import net.hoyoung.user.vo.Permission;
 
 public interface PermissionMapper {
@@ -14,4 +16,5 @@ public interface PermissionMapper {
     int updateByPrimaryKeySelective(Permission record);
 
     int updateByPrimaryKey(Permission record);
+    List<Permission> findSeletive(Permission permission);
 }
